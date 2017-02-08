@@ -2,7 +2,7 @@ from django.apps import apps
 from django.contrib import admin, messages
 from django.utils.translation import ugettext_lazy as _
 from .gcm import GCMError
-from .apns import APNSServerError, APNS_ERROR_MESSAGES
+from .apns import APNSServerError
 from .models import APNSDevice, GCMDevice, WNSDevice, get_expired_tokens
 from .settings import PUSH_NOTIFICATIONS_SETTINGS as SETTINGS
 
@@ -39,7 +39,7 @@ class DeviceAdmin(admin.ModelAdmin):
 			except GCMError as e:
 				errors.append(str(e))
 			except APNSServerError as e:
-				errors.append(APNS_ERROR_MESSAGES[e.status])
+				errors.append(e.status)
 
 			if bulk:
 				break
